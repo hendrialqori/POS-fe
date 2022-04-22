@@ -1,10 +1,12 @@
-import { useState, useEffect } from "react";
-import { StyleCardItem } from "../Styled/Style-component";
+import { useState, useEffect, useCallback } from "react";
+import { StyleCardItem } from "../../Styled/Style-component";
 import CheckOut from "./CheckOut-menu";
-import { getDataProduct } from "../Context-API/Actions";
-import { ItemType,useStoreContext } from "../Context-API/Store-reducer";
+import { getDataProduct, getDataQueue } from "../../Context-API/Actions";
+import { ItemType,useStoreContext } from "../../Context-API/Store-reducer";
 import "./styled.css";
-import { numberwithCommas } from "../Context-API/Actions";
+import { numberwithCommas } from "../../Context-API/Actions";
+import Dropdown from "./DropdownMenus";
+import '../../Styled/loading.css'
 
 function Menus() {
 
@@ -19,9 +21,10 @@ function Menus() {
   });
 
 
+  // Get all menu
   useEffect(() => {
     setResponse({ isLoading: true, isError: false });
-    getDataProduct(dispatch)
+    getDataProduct(dispatch, '')
       .then((_) => {
         setResponse({ isLoading: false, isError: false });
       })
@@ -29,6 +32,35 @@ function Menus() {
         setResponse({ isLoading: false, isError: true });
       });
   }, [dispatch]);
+
+
+  // This method overidding 
+  const chooseCategory = useCallback( async (data:string) => {
+    setResponse({ isLoading: true, isError: false });
+
+      try {
+        await getDataProduct(dispatch, data)
+         setResponse({ isLoading: false, isError: false });
+
+      } catch (error) {
+        if(error instanceof Error){
+          console.log(error.message);   
+        }
+        setResponse({ isLoading: false, isError: true });
+      }
+      
+  },[dispatch])
+
+  // Update queue API
+  useEffect(()=> {
+
+    (async ()=> {
+        await getDataQueue(dispatch)
+    })();
+       
+  },[dispatch])
+
+
 
   const handleAddToCart = (item: ItemType) => {
     setCart(prev => {
@@ -47,17 +79,25 @@ function Menus() {
   }
 
   if (response.isLoading)
-    return <span className="font-bold text-sm m-1">Loading . . . </span>;
+  return (
+    <div style={{ height: "470px" }} className='loading'></div>
+  );
+
   if (response.isError)
     return (
-      <span className="font-bold text-sm m-1">Something went wrong! </span>
+      <div 
+      style={{ height: "470px" }} 
+      className='flex justify-center items-center font-light text-xl'
+      >
+        Something went wrong !
+      </div>
     );
 
   return (
-      <div className="flex relative" style={{ height: "470px" }}>
+      <div style={{ height: "470px" }} className="flex relative" >
         <div id="wrapper-list-menu" className="overflow-y-auto w-4/6">
-          <div id="all-menus" className="flex flex-wrap gap-1 h-max mx-1 my-1">
-
+          <Dropdown chooseCategory={chooseCategory} />
+          <div id="all-menus" className="flex flex-wrap gap-1 h-max mx-1 mt-1">
             {state.Product &&
               state.Product.map((item, i) => (
                 <StyleCardItem key={i} onClick={() => handleAddToCart(item)} >

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ItemType } from "../Context-API/Store-reducer";
+import { ItemType } from "../../Context-API/Store-reducer";
 import { IoMdAdd } from "react-icons/io";
 import { BiMinus } from "react-icons/bi";
 import "./styled.css";
@@ -13,9 +13,9 @@ type Props = {
 
 export default function ItemModal({ item, isOpen, setCart, setOpen }: Props) {
   const [text, setText] = useState<{
-    notes: string;
-    count: string;
-  }>({ notes: "", count: "1" });
+    notes: string,
+    count: string
+  }>({ notes: '', count: '1' });
 
   const handleChangeText = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -43,7 +43,7 @@ export default function ItemModal({ item, isOpen, setCart, setOpen }: Props) {
       }
       return [...prev, item];
     });
-    setText({ notes: "", count: "1" });
+    setText({ notes:'', count: '1' });
     setOpen(false);
   };
 
@@ -123,9 +123,10 @@ export default function ItemModal({ item, isOpen, setCart, setOpen }: Props) {
           </section>
           <section>
             <textarea
+              value={text.notes}
               onChange={(e) => handleChangeText(e)}
               className="p-1 text-sm shadow-md bg-gray-100"
-              id=" notes"
+              id='notes'
               cols={30}
               rows={5}
               placeholder="Notes!"

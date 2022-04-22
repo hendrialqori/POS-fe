@@ -1,4 +1,4 @@
-import Layout from './Layout/Main-layout';
+import Layout from './Layout/Main/Main-layout';
 import { AppContext } from './Context-API/Store-reducer';
 
 const App:React.FC = () => {
