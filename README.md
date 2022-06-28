@@ -1,5 +1,5 @@
 ### Point of Sale web app
-Demo site[qorypos](https://qorypos.netlify.app)
+Demo site [qorypos](https://qorypos.netlify.app)
 
 #### Tools
 - [React JS](https://reactjs.org/)
