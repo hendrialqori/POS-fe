@@ -14,20 +14,13 @@ import { useStoreContext } from '../../Context-API/Store-reducer'
 const Layout = ()=> {
     const [isOpen, setOpen] = useState<boolean>(false)
     const handleOpen = useCallback(()=>{ setOpen(prev => !prev ) },[setOpen])
-
-    
     const { dispatch } = useStoreContext()
 
     useEffect(()=> {
-
         (async ()=> {
             await getDataQueue(dispatch)
-        })();
-           
+        })();       
       },[dispatch])
-
-
-    
 
     return(
         <div id="main-layout" className='border-2 shadow-md max-w-3xl mx-auto relative overflow-hidden'>
