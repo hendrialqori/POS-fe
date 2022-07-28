@@ -26,6 +26,9 @@ const Layout = ()=> {
            
       },[dispatch])
 
+
+    
+
     return(
         <div id="main-layout" className='border-2 shadow-md max-w-3xl mx-auto relative overflow-hidden'>
             <div className='bg-emerald-900 flex justify-between p-3'>
@@ -38,14 +41,14 @@ const Layout = ()=> {
                     <Navigasi isOpen={isOpen} handleOpen={handleOpen} />
             </div>
             <div id="body" className='relative'>
-        <Fragment>
-            <Routes>
-                <Route path='/' element={<Menus />} />
-                <Route path='/antrian' element={<QueueList />} />
-                <Route path='/aktivitas' element={<Activities />} />
-                <Route path='/done-payment' element={<DonePayment />} />
-            </Routes>
-        </Fragment>
+                <Fragment>
+                    <Routes>
+                        <Route path='/' element={<Menus />} />
+                        <Route path='/antrian' element={<QueueList />} />
+                        <Route path='/aktivitas' element={<Activities />} />
+                        <Route path='/done-payment' element={<DonePayment />} />
+                    </Routes>
+                </Fragment>
             </div>
         </div>      
     )
